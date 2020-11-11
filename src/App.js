@@ -22,6 +22,7 @@ const App = () => {
 
   return (
     <div>
+    <h2>Weather App</h2>
       <input type="text" onKeyPress={search} onChange={e => setQuery(e.target.value)} value={query} placeholder="Search" />
 
       <div className="card">
