@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import "./styles/main.scss";
 
 const App = () => {
   const [query, setQuery] = useState("")
@@ -13,7 +14,7 @@ const App = () => {
       const response = await fetch(`${base}weather?q=${query}&appid=${key}`);
       const data = await response.json();
       setWeather(data);
-      console.log(data.weather[0].main)
+      console.log(data.sys.sunrise)
     }
 
     fetchWeather()
@@ -21,22 +22,28 @@ const App = () => {
   }
 
   return (
-    <div>
-    <h2>Weather App</h2>
+    <>
+    {( weather.main !== undefined) ? (
+      <div className="container">
+      <h1>Weather App</h1>
       <input type="text" onKeyPress={search} onChange={e => setQuery(e.target.value)} value={query} placeholder="Search" />
 
       <div className="card">
         <div className="card-image">
-          <img src="" alt="" />
+          <img src={require("./img/night.svg")} alt="" />
         </div>
         <div className="card-text">
           <h2 className="city-name">{weather.name}</h2>
-          <h3>{weather.weather[0].main}</h3>
+          <h3>{weather.weather[0].description}</h3>
           <h1 className="temp">{Math.round(weather.main.temp - 273.15)}</h1>
         </div>
       </div>
     </div>
+    ) : (<div className="container">
+          <h1>Weather App</h1> 
+          <input type="text" onKeyPress={search} onChange={e => setQuery(e.target.value)} value={query} placeholder="Search" />
+        </div>)}
+    </>
   )
-}
-
-export default App
+    }
+export default App;
